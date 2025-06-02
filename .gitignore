@@ -1,0 +1,15 @@
+# Builds #
+build/
+node_modules/
+out/
+target/
+
+# IDE Settings #
+.classpath
+.project
+.settings
+*.iml
+.idea
+
+# OS #
+.DS_Store
