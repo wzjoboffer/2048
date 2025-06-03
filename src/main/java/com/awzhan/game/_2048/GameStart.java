@@ -1,3 +1,5 @@
+package com.awzhan.game._2048;
+
 public class GameStart {
 
     public static void main(String[] args) {

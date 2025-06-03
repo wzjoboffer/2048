@@ -1,3 +1,5 @@
+package com.awzhan.game._2048;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
