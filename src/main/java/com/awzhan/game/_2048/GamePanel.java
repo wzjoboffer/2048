@@ -16,10 +16,10 @@ public class GamePanel extends JPanel {
         this.setLayout(null);
         this.setOpaque(false);
 
-        initCard();
+        initCards();
     }
 
-    private void initCard() {
+    private void initCards() {
         this.cards = new Card[ROWS][COLS];
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {

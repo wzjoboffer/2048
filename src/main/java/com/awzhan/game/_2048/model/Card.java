@@ -1,5 +1,6 @@
 package com.awzhan.game._2048.model;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import lombok.Getter;
@@ -37,6 +38,38 @@ public class Card {
     }
 
     public void draw(Graphics graphics) {
+        final Color oldColor = graphics.getColor();
+        graphics.setColor(getColor(value));
         graphics.fillRoundRect(x, y, WIDTH, HEIGHT, ARC_WIDTH, ARC_HEIGHT);
+        graphics.setColor(oldColor);
+    }
+
+    private Color getColor(int value) {
+        switch (value) {
+            case 2:
+                return new Color(238, 244, 234);
+            case 4:
+                return new Color(222, 236, 200);
+            case 8:
+                return new Color(174, 213, 130);
+            case 16:
+                return new Color(142, 201, 75);
+            case 32:
+                return new Color(111, 148, 48);
+            case 64:
+                return new Color(76, 174, 124);
+            case 128:
+                return new Color(60, 180, 144);
+            case 256:
+                return new Color(45, 130, 120);
+            case 512:
+                return new Color(9, 97, 26);
+            case 1024:
+                return new Color(242, 177, 121);
+            case 2048:
+                return new Color(223, 185, 0);
+            default:
+                return new Color(92, 151, 117);
+        }
     }
 }
