@@ -20,8 +20,6 @@ public class GameFrame extends JFrame {
         this.setResizable(false);
 
         createMenu();
-
-        this.setVisible(true);
     }
 
     private void createMenu() {
