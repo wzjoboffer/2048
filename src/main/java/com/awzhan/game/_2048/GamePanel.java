@@ -24,7 +24,7 @@ public class GamePanel extends JPanel {
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
                 int[] coordinates = Card.getCoordinates(i, j);
-                cards[i][j] = new Card(coordinates[0], coordinates[1], 0);
+                cards[i][j] = new Card(coordinates[0], coordinates[1], 2048);
             }
         }
         System.out.println("Cards created: " + Arrays.deepToString(cards));

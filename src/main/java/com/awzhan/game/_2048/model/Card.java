@@ -1,6 +1,8 @@
 package com.awzhan.game._2048.model;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 
 import lombok.Getter;
@@ -41,6 +43,17 @@ public class Card {
         final Color oldColor = graphics.getColor();
         graphics.setColor(getColor(value));
         graphics.fillRoundRect(x, y, WIDTH, HEIGHT, ARC_WIDTH, ARC_HEIGHT);
+
+        if (value != 0) {
+            graphics.setColor(new Color(125, 78, 51));
+            final Font font = new Font(Font.MONOSPACED, Font.BOLD, 30);
+            graphics.setFont(font);
+            final String text = String.valueOf(value);
+            int textX = x + (WIDTH - getTextWidth(font, text, graphics)) / 2;
+            int textY = y + 50;
+            graphics.drawString(text, textX, textY);
+        }
+
         graphics.setColor(oldColor);
     }
 
@@ -71,5 +84,14 @@ public class Card {
             default:
                 return new Color(92, 151, 117);
         }
+    }
+
+    private int getTextWidth(Font font, String text, Graphics graphics) {
+        FontMetrics fontMetrics = graphics.getFontMetrics(font);
+        int width = 0;
+        for (int i = 0; i < text.length(); i++) {
+            width += fontMetrics.charWidth(text.charAt(i));
+        }
+        return width;
     }
 }
