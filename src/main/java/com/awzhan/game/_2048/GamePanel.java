@@ -1,8 +1,11 @@
 package com.awzhan.game._2048;
 
 import java.awt.Graphics;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.Arrays;
 import java.util.Random;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.awzhan.game._2048.model.Card;
@@ -12,15 +15,21 @@ public class GamePanel extends JPanel {
     private static final int COLS = 4;
     private final Random random = new Random();
 
+    private final JFrame frame;
+    private boolean gameFinish;
     private Card[][] cards;
 
-    public GamePanel() {
+    public GamePanel(JFrame frame) {
+        this.frame = frame;
+        this.gameFinish = false;
         this.setLayout(null);
         this.setOpaque(false);
 
         initCards();
 
         createRandom();
+
+        bindKeyListener();
     }
 
     private void initCards() {
@@ -37,7 +46,7 @@ public class GamePanel extends JPanel {
         if (isPanelFull()) {
             return;
         }
-        
+
         int temp = random.nextInt(5);
         int value = temp == 0 ? 4 : 2;
         final Card card = getRandomCard();
@@ -62,6 +71,53 @@ public class GamePanel extends JPanel {
             }
         }
         return true;
+    }
+
+    private void bindKeyListener() {
+        frame.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent event) {
+                if (gameFinish) {
+                    return;
+                }
+                switch (event.getKeyCode()) {
+                    case KeyEvent.VK_UP:
+                        System.out.println("up");
+                        moveUp();
+                        break;
+                    case KeyEvent.VK_DOWN:
+                        System.out.println("down");
+                        moveDown();
+                        break;
+                    case KeyEvent.VK_LEFT:
+                        System.out.println("left");
+                        moveLeft();
+                        break;
+                    case KeyEvent.VK_RIGHT:
+                        System.out.println("right");
+                        moveRight();
+                        break;
+                    default:
+                        System.out.println("other key pressed");
+                }
+            }
+        });
+    }
+
+    private void moveUp() {
+
+    }
+
+    private void moveDown() {
+
+    }
+
+    private void moveLeft() {
+
+    }
+
+    private void moveRight() {
+
     }
 
     @Override
