@@ -105,19 +105,27 @@ public class GamePanel extends JPanel {
     }
 
     private void moveUp() {
-
+        for (int i = 1; i < ROWS; i++) {
+            for (int j = 0; j < COLS; j++) {
+                if (cards[i][j].getValue() == 0) {
+                    continue;
+                }
+                CardUtils.moveUp(cards, i, j);
+            }
+        }
+        repaint();
     }
 
     private void moveDown() {
-
+        repaint();
     }
 
     private void moveLeft() {
-
+        repaint();
     }
 
     private void moveRight() {
-
+        repaint();
     }
 
     @Override
