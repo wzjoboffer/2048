@@ -27,7 +27,7 @@ public class GamePanel extends JPanel {
 
         initCards();
 
-        createRandom();
+        createRandomCard();
 
         bindKeyListener();
     }
@@ -42,7 +42,7 @@ public class GamePanel extends JPanel {
         }
     }
 
-    private void createRandom() {
+    private void createRandomCard() {
         if (isPanelFull()) {
             return;
         }
@@ -105,6 +105,7 @@ public class GamePanel extends JPanel {
     }
 
     private void moveUp() {
+        CardUtils.cleanup(cards);
         for (int i = 1; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
                 if (cards[i][j].getValue() == 0) {
@@ -113,6 +114,7 @@ public class GamePanel extends JPanel {
                 CardUtils.moveUp(cards, i, j);
             }
         }
+        createRandomCard();
         repaint();
     }
 

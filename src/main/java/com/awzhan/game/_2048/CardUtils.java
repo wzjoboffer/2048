@@ -8,8 +8,16 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class CardUtils {
 
+    public static void cleanup(@NonNull final Card[][] cards) {
+        for (int i = 0; i < cards.length; i++) {
+            for (int j = 0; j < cards[i].length; j++) {
+                cards[i][j].setMerge(false);
+            }
+        }
+    }
+
     public static void moveUp(@NonNull final Card[][] cards, int i, int j) {
-        if (i == 0) {
+        if (i == 0 || cards[i][j].getValue() == 0) {
             return;
         }
 
@@ -19,8 +27,10 @@ public class CardUtils {
             prev.setValue(curr.getValue());
             curr.setValue(0);
         }
-        else if (prev.getValue() == curr.getValue()) {
-
+        else if (!prev.isMerge() && prev.getValue() == curr.getValue()) {
+            prev.setValue(prev.getValue() * 2);
+            curr.setValue(0);
+            prev.setMerge(true);
         }
     }
 }
