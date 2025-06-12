@@ -33,4 +33,22 @@ public class CardUtils {
             prev.setMerge(true);
         }
     }
+
+    public static void moveRight(@NonNull final Card[][] cards, int i, int j) {
+        if (j == cards[0].length - 1 || cards[i][j].getValue() == 0) {
+            return;
+        }
+
+        final Card curr = cards[i][j];
+        final Card prev = cards[i][j+1];
+        if (prev.getValue() == 0) {
+            prev.setValue(curr.getValue());
+            curr.setValue(0);
+        }
+        else if (!prev.isMerge() && prev.getValue() == curr.getValue()) {
+            prev.setValue(prev.getValue() * 2);
+            curr.setValue(0);
+            prev.setMerge(true);
+        }
+    }
 }

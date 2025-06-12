@@ -127,6 +127,16 @@ public class GamePanel extends JPanel {
     }
 
     private void moveRight() {
+        CardUtils.cleanup(cards);
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = COLS - 2; j >= 0; j--) {
+                if (cards[i][j].getValue() == 0) {
+                    continue;
+                }
+                CardUtils.moveRight(cards, i, j);
+            }
+        }
+        createRandomCard();
         repaint();
     }
 
