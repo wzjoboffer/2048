@@ -5,6 +5,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.Set;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -13,6 +14,9 @@ import com.awzhan.game._2048.model.Card;
 public class GamePanel extends JPanel {
     private static final int ROWS = 4;
     private static final int COLS = 4;
+    private static final Set<Integer> VALID_KEY_CODES =
+            Set.of(KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT);
+
     private final Random random = new Random();
 
     private final JFrame frame;
@@ -80,32 +84,42 @@ public class GamePanel extends JPanel {
                 if (gameFinish) {
                     return;
                 }
-                switch (event.getKeyCode()) {
-                    case KeyEvent.VK_UP:
-                        System.out.println("up");
-                        moveUp();
-                        break;
-                    case KeyEvent.VK_DOWN:
-                        System.out.println("down");
-                        moveDown();
-                        break;
-                    case KeyEvent.VK_LEFT:
-                        System.out.println("left");
-                        moveLeft();
-                        break;
-                    case KeyEvent.VK_RIGHT:
-                        System.out.println("right");
-                        moveRight();
-                        break;
-                    default:
-                        System.out.println("other key pressed");
-                }
+                moveCard(event);
             }
         });
     }
 
-    private void moveUp() {
+    private void moveCard(KeyEvent event) {
+        int keyCode = event.getKeyCode();
+        if (!VALID_KEY_CODES.contains(keyCode)) {
+            System.out.println("Other key pressed.");
+            return;
+        }
+
         CardUtils.cleanup(cards);
+
+        if (KeyEvent.VK_UP == keyCode) {
+            System.out.println("Up");
+            moveUp();
+        }
+        else if (KeyEvent.VK_DOWN == keyCode) {
+            System.out.println("Down");
+            moveDown();
+        }
+        else if (KeyEvent.VK_LEFT == keyCode) {
+            System.out.println("left");
+            moveLeft();
+        }
+        else if (KeyEvent.VK_RIGHT == keyCode) {
+            System.out.println("right");
+            moveRight();
+        }
+
+        createRandomCard();
+        repaint();
+    }
+
+    private void moveUp() {
         for (int i = 1; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
                 if (cards[i][j].getValue() == 0) {
@@ -114,8 +128,6 @@ public class GamePanel extends JPanel {
                 CardUtils.moveUp(cards, i, j);
             }
         }
-        createRandomCard();
-        repaint();
     }
 
     private void moveDown() {
@@ -127,7 +139,6 @@ public class GamePanel extends JPanel {
     }
 
     private void moveRight() {
-        CardUtils.cleanup(cards);
         for (int i = 0; i < ROWS; i++) {
             for (int j = COLS - 2; j >= 0; j--) {
                 if (cards[i][j].getValue() == 0) {
@@ -136,8 +147,6 @@ public class GamePanel extends JPanel {
                 CardUtils.moveRight(cards, i, j);
             }
         }
-        createRandomCard();
-        repaint();
     }
 
     @Override
