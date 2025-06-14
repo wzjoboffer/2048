@@ -107,11 +107,11 @@ public class GamePanel extends JPanel {
             moveDown();
         }
         else if (KeyEvent.VK_LEFT == keyCode) {
-            System.out.println("left");
+            System.out.println("Left");
             moveLeft();
         }
         else if (KeyEvent.VK_RIGHT == keyCode) {
-            System.out.println("right");
+            System.out.println("Right");
             moveRight();
         }
 
@@ -131,11 +131,25 @@ public class GamePanel extends JPanel {
     }
 
     private void moveDown() {
-        repaint();
+        for (int i = ROWS - 2; i >= 0; i--) {
+            for (int j = 0; j < COLS; j++) {
+                if (cards[i][j].getValue() == 0) {
+                    continue;
+                }
+                CardUtils.moveDown(cards, i, j);
+            }
+        }
     }
 
     private void moveLeft() {
-        repaint();
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 1; j < COLS; j++) {
+                if (cards[i][j].getValue() == 0) {
+                    continue;
+                }
+                CardUtils.moveLeft(cards, i, j);
+            }
+        }
     }
 
     private void moveRight() {
