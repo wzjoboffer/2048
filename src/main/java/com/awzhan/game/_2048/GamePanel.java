@@ -1,15 +1,15 @@
 package com.awzhan.game._2048;
 
-import java.awt.Graphics;
+import com.awzhan.game._2048.model.Card;
+
+import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Set;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-import com.awzhan.game._2048.model.Card;
 
 public class GamePanel extends JPanel {
     private static final int ROWS = 4;
@@ -117,6 +117,8 @@ public class GamePanel extends JPanel {
 
         createRandomCard();
         repaint();
+
+        checkGame();
     }
 
     private void moveUp() {
@@ -161,6 +163,56 @@ public class GamePanel extends JPanel {
                 CardUtils.moveRight(cards, i, j);
             }
         }
+    }
+
+    private void checkGame() {
+        if (reach2048()) {
+            gameWin();
+        }
+        else if (isPanelFull() && !canMove()) {
+            gameOver();
+        }
+    }
+
+    private boolean reach2048() {
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLS; j++) {
+                if (cards[i][j].getValue() == 2048) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean canMove() {
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLS; j++) {
+                int curr = cards[i][j].getValue();
+                int up = (i == 0) ? 0 : cards[i-1][j].getValue();
+                int down = (i == ROWS - 1) ? 0 : cards[i+1][j].getValue();
+                int left = (j == 0) ? 0 : cards[i][j-1].getValue();
+                int right = (j == COLS - 1) ? 0 : cards[i][j+1].getValue();
+                if (curr == up || curr == down || curr == left || curr == right) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private void gameWin() {
+        gameFinish = true;
+        UIManager.put("OptionPane.buttonFont", new FontUIResource(new Font(Font.SANS_SERIF, Font.ITALIC, 18)));
+        UIManager.put("OptionPane.messageFont", new FontUIResource(new Font(Font.SANS_SERIF, Font.ITALIC, 18)));
+        JOptionPane.showMessageDialog(frame, "You Win!");
+    }
+
+    private void gameOver() {
+        gameFinish = true;
+        UIManager.put("OptionPane.buttonFont", new FontUIResource(new Font(Font.SANS_SERIF, Font.ITALIC, 18)));
+        UIManager.put("OptionPane.messageFont", new FontUIResource(new Font(Font.SANS_SERIF, Font.ITALIC, 18)));
+        JOptionPane.showMessageDialog(frame, "Game Over!");
     }
 
     @Override
